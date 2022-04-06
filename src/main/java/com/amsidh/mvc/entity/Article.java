@@ -9,14 +9,16 @@ import org.springframework.data.elasticsearch.annotations.MultiField;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.data.elasticsearch.annotations.FieldType.*;
+import static org.springframework.data.elasticsearch.annotations.FieldType.Keyword;
+import static org.springframework.data.elasticsearch.annotations.FieldType.Nested;
+import static org.springframework.data.elasticsearch.annotations.FieldType.Text;
 
 @Document(indexName = "blog", type = "article")
 public class Article {
     @Id
     private String id;
 
-    @MultiField(mainField = @Field(type = Text, fielddata = true), otherFields = { @InnerField(suffix = "verbatim", type = Keyword) })
+    @MultiField(mainField = @Field(type = Text, fielddata = true), otherFields = {@InnerField(suffix = "verbatim", type = Keyword)})
     private String title;
 
     @Field(type = Nested, includeInParent = true)
